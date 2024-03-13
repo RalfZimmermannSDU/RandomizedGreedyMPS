@@ -1,0 +1,16 @@
+**************************************************************
+* Reference results for Section 3.3. for fixed random stream *
+**************************************************************
+
+Method          randfastMPEsc2 LS1        LS05       rand
+runs 	        100            100        100        100
+POD r	        40             40         40         40
+DEIM r	        40             40         40         40
+oblproj  bd  a  1.7301         2.8511     3.4891     4.1977
+var of   bd  a  1.9212e-04     0.1186     0.1924     0.2048
+oblproj  bd  b  1.7159         2.7796     3.2388     3.7483
+var of   bd  b  9.0603e-04     0.0781     0.0976     0.0791
+meantraj err q  0.0456         0.1012     0.1328     0.1467
+var traj err q  5.2002e-04     0.0060     0.0080     0.0073
+meantraj err p  0.0491         0.1011     0.1303     0.1403
+var traj err p  5.7262e-04     0.0057     0.0077     0.0067
