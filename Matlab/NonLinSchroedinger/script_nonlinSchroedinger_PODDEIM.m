@@ -4,7 +4,8 @@
 % "nonlinear 1D Schroedinger" equation as featured in
 % Section 3.3 of 
 %
-% Randomized greedy magic point selection schemes for nonlinear model reduction
+% "Randomized greedy magic point selection schemes for 
+%  nonlinear model reduction"
 % Ralf Zimmermann and Kai Cheng, ACOM
 %
 %
@@ -17,7 +18,7 @@ addpath('Symp_time_stepping_schemes')
 addpath('../PointSelectors/')
 %
 %% USER PARAMETERS
-model         = 1;   % 1:FOM,            2:POD,               3:DEIM
+model         = 3;   % 1:FOM,            2:POD,               3:DEIM
 tstep_scheme  = 2;   % 1:Stormer-Verlet, 2:symplectic Euler
 MPE_mode      = 1;   % 1:onlinefast MPE, 2:leverage score sampling, 
                      % else: no oversampling
@@ -25,7 +26,7 @@ beta          = 0.0  % weight parameter for leverage score sampling
 r             = 40;
 rDEIM         = 40;
 nr_points     = 2*rDEIM% choose point selection scheme
-nr_randruns   = 1; % set to 100 for reproducing the paper results
+nr_randruns   = 100; % set to 100 for reproducing the paper results
 loadFOMstring = 'Snapshots_Schroed/SchroedNew_FOM_N400_tsteps2000_Tend20.mat';
 %
 stream = RandStream('mt19937ar')
@@ -61,7 +62,8 @@ if model == 1         % do a full-order run
     p0 = real(u0);
 else 
     % i.e. in POD or POD-DEIM mode: 
-    % It is expected that snapshots are precomputed!
+    % It is expected that snapshots are precomputed and stored under
+    % "loadFOMstring" !!!
     state_dim = r;
     % load full order snapshots
     FOMstruct = load(loadFOMstring);
@@ -94,12 +96,12 @@ else
     % the projected ODE is
     % qr(t) =  (Uq'*Dxx*Up)*pr + eps*Uq'*b(Uq*qr(t),Up*pr(t)) = \nabla_pH
     % pr(t) = -(Up'*Dxx*Uq)*qr + eps*Up'*a(Uq*qr(t),Up*pr(t)) =-\nabla_qH
+    % see eqs. (15),(16) in corrsponding paper
 
     % The linear operator is projected as
     Dxxr = Up'*(Dxx*Uq); 
     % Dxx is sym. => Dxxr' = (Up'*Dxx*Uq)
-    % Dxxr  features in grad_qH
-    % Dxxr' features in grad_pH
+    % Dxxr  features in grad_qH, Dxxr' features in grad_pH
     if model > 2
         % create DEIM bases for a_nonlin, b_nonlin
         [Qa,Ea,Ra] = svd(a_nonlin);
