@@ -34,7 +34,7 @@ while length(P_opt) < nr_points
     % draw nr_points-k samples from LS-distribution
     R = randsample(stream, 1:N, nr_points-k, true, probs_LS);
     P_opt = unique([R, P_opt]);
-    k = length(P_opt)
+    k = length(P_opt);
 end
 
 % compute oblique projection error
