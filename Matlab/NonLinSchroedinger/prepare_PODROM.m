@@ -32,7 +32,7 @@ legend('Singular values of Yq','Singular values of Yp')
 % see eqs. (15),(16) in corrsponding paper
 
 % The linear operator is projected as
-ROM.lin_op = ROM.Up'*(FOM.operator*ROM.Uq); % this is Dxxr
+ROM.lin_op = ROM.Up'*(FOM.lin_op*ROM.Uq); % this is Dxxr
 % Dxx is sym. => Dxxr' = (Up'*Dxx*Uq)
 % Dxxr  features in grad_qH, Dxxr' features in grad_pH
 

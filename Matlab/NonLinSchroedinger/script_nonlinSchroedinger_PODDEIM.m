@@ -8,8 +8,30 @@
 %  nonlinear model reduction"
 % Ralf Zimmermann and Kai Cheng, ACOM
 %
+% Instructions:
+% 
+% 1) First run the script in FOM mode (set model =1):
+%    ">> script_nonlinSchroedinger_PODDEIM"
+%    This will execute the full-order model and in particular,
+%    the snapshots will be generated.
+%    The reduced order models rely on these snapshots.
 %
+% 2) Change the model to POD (2) or DEIM (3) and set the other user
+%    parameters according to your preferences.
+%    The default set up for reproducing the results from the paper is:
+%    tstep_scheme  = 2;
+%    MPE_mode      = 1; %1:onlinefast MPE, 2:leverage score sampling
+%    r             = 40;
+%    rDEIM         = 40;
+%    nr_points     = 2*rDEIM;
+%    nr_randruns   = 100;
+%    Then rerun 
+%    ">> script_nonlinSchroedinger_PODDEIM"
+%   This reproduces the first column of the table "TableResults.txt".
+%   Be aware that the script will run the ROM 100 times to compute
+%   performance statistics. This may take a while.
 %
+%   
 %
 %clear; close all;
 %
@@ -18,13 +40,13 @@ addpath('Symp_time_stepping_schemes')
 addpath('../PointSelectors/')
 %
 %% USER PARAMETERS
-model         = 1;   % 1:FOM,            2:POD,               3:DEIM
+model         = 3;   % 1:FOM,            2:POD,               3:DEIM
 tstep_scheme  = 2;   % 1:Stormer-Verlet, 2:symplectic Euler
-MPE_mode      = 1;   % 1:onlinefast MPE, 2:leverage score sampling, 
+MPE_mode      = 2;   % 1:onlinefast MPE, 2:leverage score sampling
                      % else: no oversampling
 beta          = 1.0; % weight parameter for leverage score sampling
-r             = 40;
-rDEIM         = 40;
+r             = 40;  % dimension of POD basis
+rDEIM         = 40;  % dimension of DEIM basis
 nr_points     = 2*rDEIM% choose point selection scheme
 nr_randruns   = 100; % set to 100 for reproducing the paper results
 loadFOMstring = 'Snapshots_Schroed/SchroedNew_FOM_N400_tsteps2000_Tend20.mat';
@@ -40,6 +62,13 @@ epsilon = 1.0932;
 dt= 0.01;
 T = 20.0;
 n_tsteps = floor(T/dt);
+
+% check if the snapshot folder exists, if not, create it
+if ~exist('Snapshots_Schroed', 'dir')
+       mkdir('Snapshots_Schroed')
+end
+
+
 
 if model == 1         
     % FOM
