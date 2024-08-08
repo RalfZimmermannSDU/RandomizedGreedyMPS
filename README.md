@@ -26,14 +26,16 @@ Open the script "script_nonlinSchroedinger_PODDEIM.m" and read the topmost comme
  2) Change the model to POD (2) or DEIM (3) and set the other user
     parameters according to your preferences.
     The default set up for reproducing the results from the paper is:
-    tstep_scheme  = 2;
-    MPE_mode      = 1; %1:onlinefast MPE, 2:leverage score sampling
-    r             = 40;
-    rDEIM         = 40;
-    nr_points     = 2*rDEIM;
-    nr_randruns   = 100;
+    * tstep_scheme  = 2;
+    * MPE_mode      = 1; %1:onlinefast MPE, 2:leverage score sampling
+    * r             = 40;
+    * rDEIM         = 40;
+    * nr_points     = 2*rDEIM;
+    * nr_randruns   = 100;
+    
     Then rerun 
     ">> script_nonlinSchroedinger_PODDEIM"
+    
    This reproduces the first column of the table "TableResults.txt".
    Be aware that the script will run the ROM 100 times to compute
    performance statistics. This may take a while.
